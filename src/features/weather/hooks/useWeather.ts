@@ -28,6 +28,43 @@ const useWeather = () => {
       return null;
     }
   };
-  return { getWeather, getCityCoordinates };
+
+  const getAddressCoordinatesAutocomplete = async (address: string) => {
+    try {
+      const response = await api.get(
+        `https://api.maptiler.com/geocoding/${encodeURIComponent(
+          address
+        )}.json?key=${
+          import.meta.env.VITE_MAPTILER_KEY
+        }&country=co&autocomplete=true&limit=10&proximity=ip`
+      );
+      const data = response.data;
+      const suggestions = data.features.map((f: any) => ({
+        name: f.place_name,
+        coordinates: f.geometry.coordinates,
+      }));
+      return suggestions;
+    } catch (error) {
+      console.error("Error buscando ciudad:", error);
+      return null;
+    }
+  };
+
+  const getRouteGeoJSON = async (start: string, end: string) => {
+    const response = await api.get(
+      `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${
+        import.meta.env.VITE_KEY_ROUTER
+      }&start=${start}&end=${end}&language=es`
+    );
+    const data = response.data;
+    const routeGeoJSON = data.features[0].geometry;
+    return routeGeoJSON;
+  };
+  return {
+    getWeather,
+    getCityCoordinates,
+    getRouteGeoJSON,
+    getAddressCoordinatesAutocomplete,
+  };
 };
 export default useWeather;

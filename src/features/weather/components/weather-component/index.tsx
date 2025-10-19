@@ -59,8 +59,6 @@ const WeatherComponent = ({ coords, resetMap }: WeatherMapProps) => {
       zoom: 3,
       apiKey: MAPTILER_KEY,
       projection: "globe",
-      style:
-        "https://api.maptiler.com/maps/basic-v2/style.json?key=8n2Bj9Ce31tXtX8wPUnA",
     });
     mapRef.current = map;
     return () => {
