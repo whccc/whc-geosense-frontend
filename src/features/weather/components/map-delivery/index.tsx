@@ -325,7 +325,7 @@ const MapDelivery = ({ coords }: WeatherMapProps) => {
           </ul>
         )}
       </div>
-      <div className="relative w-full h-[calc(100vh-250px)] rounded-lg overflow-hidden shadow-lg">
+      <div className="relative w-full h-[calc(100vh-328px)] rounded-lg overflow-hidden shadow-lg">
         <SpaceBackground />
 
         <div ref={mapContainer} className="w-full h-full" />

@@ -172,7 +172,7 @@ const WeatherComponent = ({ coords, resetMap }: WeatherMapProps) => {
     }));
   };
   return (
-    <div className="relative w-full h-[calc(100vh-150px)] rounded-lg overflow-hidden shadow-lg">
+    <div className="relative w-full h-[calc(100vh-304px)] rounded-lg overflow-hidden shadow-lg">
       <SpaceBackground />
       <div ref={mapContainer} className="w-full h-full" />
       <div className="absolute top-4 left-0 right-0 p-3 z-10">
