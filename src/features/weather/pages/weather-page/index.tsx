@@ -62,7 +62,7 @@ const WeatherPage = () => {
         </button>
       </div>
 
-      <div className="relative w-full h-screen">
+      <div className="relative w-full">
         <WeatherComponent coords={coordinates} resetMap={resetMap} />
         {weather && (
           <div className="absolute top-4 left-4 bg-white/80 p-3 rounded-lg text-sm shadow-lg">
