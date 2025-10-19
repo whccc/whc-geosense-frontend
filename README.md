@@ -8,7 +8,7 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4.1.14-38B2AC?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
 [![Vite](https://img.shields.io/badge/Vite-7.1.7-646CFF?style=flat&logo=vite)](https://vitejs.dev/)
 
-*Una aplicación web premium que combina información meteorológica en tiempo real con navegación inteligente*
+*Una aplicación web que combina información meteorológica en tiempo real con navegación inteligente*
 
 [🌟 Demo Live](https://whc-geosense-frontend.vercel.app/) 
 
