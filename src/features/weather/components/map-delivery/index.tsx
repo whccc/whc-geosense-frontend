@@ -467,110 +467,153 @@ const MapDelivery = ({ coords }: WeatherMapProps) => {
         <div ref={mapContainer} className="w-full h-full">
           <SpaceBackground />
           {markersReady && (
-            <div className="absolute bg-white/50 top-4 left-0 right-0 p-3 z-10 flex justify-center">
-              {!calculateRouteReady && !initLoadingRoute && (
-                <div className="flex gap-3">
-                  <button
-                    className="group flex items-center gap-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-5 py-2.5 rounded-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-                    onClick={calculateRoute}
-                  >
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-20 animate-slideInUp">
+              <div className="bg-white/10 backdrop-blur-xl border border-white/30 rounded-2xl p-4 shadow-2xl">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-green-500/10 rounded-2xl"></div>
+
+                {!calculateRouteReady && !initLoadingRoute && (
+                  <div className="relative flex flex-col sm:flex-row gap-3">
+                    <button
+                      className="group relative overflow-hidden flex items-center gap-3 bg-gradient-to-r from-blue-500/90 via-blue-600/90 to-indigo-600/90 hover:from-blue-600 hover:via-blue-700 hover:to-indigo-700 text-white px-6 py-3 rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 backdrop-blur-sm border border-blue-400/30"
+                      onClick={calculateRoute}
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
-                      />
-                    </svg>
-                    <span>Calcular Ruta</span>
-                    <svg
-                      className="w-3 h-3 opacity-70 group-hover:opacity-100 transform group-hover:translate-x-0.5 transition-all duration-200"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+
+                      <div className="relative w-5 h-5 group-hover:rotate-12 transition-transform duration-300">
+                        <svg
+                          className="w-5 h-5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
+                          />
+                        </svg>
+                        <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-400 rounded-full animate-ping opacity-75"></div>
+                      </div>
+
+                      <span className="relative font-bold">Calcular Ruta</span>
+
+                      <svg
+                        className="w-4 h-4 opacity-70 group-hover:opacity-100 transform group-hover:translate-x-1 group-hover:scale-110 transition-all duration-300"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </button>
+
+                    <button
+                      className="group relative overflow-hidden flex items-center gap-3 bg-gradient-to-r from-red-500/90 via-red-600/90 to-pink-600/90 hover:from-red-600 hover:via-red-700 hover:to-pink-700 text-white px-6 py-3 rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50 backdrop-blur-sm border border-red-400/30"
+                      onClick={() => {
+                        clearMarkers();
+                        setQueryA("");
+                        setQueryB("");
+                        mapRef.current?.flyTo({
+                          center: [coords[1], coords[0]],
+                          zoom: 13,
+                          speed: 1.5,
+                          pitch: 0,
+                          bearing: 0,
+                        });
+                      }}
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </button>
-                  <button
-                    className="group flex items-center gap-2 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-5 py-2.5 rounded-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
-                    onClick={() => {
-                      clearMarkers();
-                      setQueryA("");
-                      setQueryB("");
-                      mapRef.current?.flyTo({
-                        center: [coords[1], coords[0]],
-                        zoom: 13,
-                        speed: 1.5,
-                        pitch: 0,
-                        bearing: 0,
-                      });
-                    }}
-                  >
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+
+                      <div className="relative w-5 h-5 group-hover:animate-bounce">
+                        <svg
+                          className="w-5 h-5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                          />
+                        </svg>
+                      </div>
+
+                      <span className="relative font-bold">Limpiar Mapa</span>
+                    </button>
+                  </div>
+                )}
+
+                {calculateRouteReady && (
+                  <div className="relative">
+                    <button
+                      className="group relative overflow-hidden flex items-center gap-4 bg-gradient-to-r from-emerald-500/95 via-green-500/95 to-teal-500/95 hover:from-emerald-600 hover:via-green-600 hover:to-teal-600 text-white px-8 py-4 rounded-xl font-bold shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-opacity-50 backdrop-blur-sm border border-emerald-400/40 animate-pulse hover:animate-none"
+                      onClick={loadRouteFromGeoJson}
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                      />
-                    </svg>
-                    <span>Limpiar Mapa</span>
-                  </button>
-                </div>
-              )}
-              {calculateRouteReady && (
-                <button
-                  className="group flex items-center gap-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 animate-pulse hover:animate-none"
-                  onClick={loadRouteFromGeoJson}
-                >
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293H15M9 10v4a1 1 0 001 1h4M9 10V6a1 1 0 011-1h4a1 1 0 011 1v4"
-                    />
-                  </svg>
-                  <span>🚀 Iniciar Ruta</span>
-                  <svg
-                    className="w-4 h-4 opacity-70 group-hover:opacity-100 transform group-hover:translate-x-1 transition-all duration-200"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13 7l5 5m0 0l-5 5m5-5H6"
-                    />
-                  </svg>
-                </button>
-              )}
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                      <div className="absolute inset-0 bg-gradient-to-l from-transparent via-emerald-300/20 to-transparent translate-x-full group-hover:-translate-x-full transition-transform duration-1000 delay-200"></div>
+
+                      <div className="relative w-6 h-6 group-hover:rotate-12 transition-all duration-300">
+                        <svg
+                          className="w-6 h-6 group-hover:scale-110 transition-transform duration-300"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293H15M9 10v4a1 1 0 001 1h4M9 10V6a1 1 0 011-1h4a1 1 0 011 1v4"
+                          />
+                        </svg>
+                        <div className="absolute -top-2 -right-2 w-3 h-3 bg-yellow-400 rounded-full animate-ping opacity-60"></div>
+                        <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-orange-400 rounded-full animate-bounce opacity-80"></div>
+                      </div>
+
+                      <span className="relative text-lg font-black bg-gradient-to-r from-white via-yellow-100 to-white bg-clip-text text-transparent group-hover:from-yellow-100 group-hover:via-white group-hover:to-yellow-100 transition-all duration-300">
+                        🚀 INICIAR RUTA
+                      </span>
+
+                      <div className="relative">
+                        <svg
+                          className="w-5 h-5 opacity-80 group-hover:opacity-100 transform group-hover:translate-x-2 group-hover:scale-125 transition-all duration-400"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={3}
+                            d="M13 7l5 5m0 0l-5 5m5-5H6"
+                          />
+                        </svg>
+                        <div className="absolute inset-0 bg-white/30 rounded-full scale-0 group-hover:scale-150 transition-transform duration-300 opacity-0 group-hover:opacity-50"></div>
+                      </div>
+                    </button>
+
+                    <div className="absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-r from-green-400 to-emerald-400 rounded-full animate-ping"></div>
+                    <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                  </div>
+                )}
+
+                <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-gradient-to-r from-blue-400 via-purple-500 to-green-400 rounded-full opacity-60"></div>
+              </div>
+
+              <div className="absolute -top-4 -left-4 w-2 h-2 bg-blue-400/60 rounded-full animate-bounce opacity-70"></div>
+              <div className="absolute -top-2 -right-6 w-1.5 h-1.5 bg-purple-400/60 rounded-full animate-pulse opacity-60"></div>
+              <div className="absolute -bottom-3 left-2 w-1 h-1 bg-green-400/60 rounded-full animate-ping opacity-50"></div>
             </div>
           )}
-          {true && (
+          {initLoadingRoute && (
             <div className="absolute inset-0 bg-black/60 flex items-center justify-center animate-fadeIn">
               <div className="bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-white/20 max-w-md mx-4 transform animate-slideInUp">
                 <div className="flex items-center gap-3 mb-4">

@@ -178,20 +178,28 @@ const WeatherComponent = ({ coords, resetMap }: WeatherMapProps) => {
       <div ref={mapContainer} className="w-full h-full">
         <SpaceBackground />
         <div className="absolute top-4 left-0 right-0 p-3 z-10">
-          <div className="bg-black rounded-lg shadow-lg max-w-md mx-auto overflow-hidden">
-            <div className="p-3 flex items-center justify-between">
-              <h3 className="font-bold text-white text-sm">Capas Climáticas</h3>
+          <div className="bg-gradient-to-br from-slate-900/95 via-gray-900/95 to-black/95 backdrop-blur-md rounded-2xl shadow-2xl border border-white/10 max-w-lg mx-auto overflow-hidden">
+            <div className="p-4 flex items-center justify-between bg-gradient-to-r from-blue-900/30 to-purple-900/30">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center shadow-lg">
+                  <span className="text-white text-lg">🌤️</span>
+                </div>
+                <div>
+                  <h3 className="font-bold text-white text-base">Control de Capas</h3>
+                  <p className="text-blue-200 text-xs">Visualización meteorológica</p>
+                </div>
+              </div>
               <button
                 onClick={() => setIsPanelExpanded(!isPanelExpanded)}
-                className="text-white hover:text-blue-400 transition-colors duration-200 p-1 rounded hover:bg-gray-800"
+                className="group relative p-2 rounded-xl bg-white/10 hover:bg-white/20 transition-all duration-300 hover:scale-105"
                 aria-label={
                   isPanelExpanded ? "Contraer panel" : "Expandir panel"
                 }
               >
                 <svg
-                  className={`w-5 h-5 transition-transform duration-300 ${
+                  className={`w-5 h-5 text-white transition-all duration-300 ${
                     isPanelExpanded ? "rotate-180" : ""
-                  }`}
+                  } group-hover:text-blue-300`}
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -203,68 +211,114 @@ const WeatherComponent = ({ coords, resetMap }: WeatherMapProps) => {
                     d="M19 9l-7 7-7-7"
                   />
                 </svg>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
               </button>
             </div>
-
             <div
-              className={`transition-all duration-300 ease-in-out ${
-                isPanelExpanded ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
+              className={`transition-all duration-500 ease-out ${
+                isPanelExpanded 
+                  ? "max-h-48 opacity-100 transform translate-y-0" 
+                  : "max-h-0 opacity-0 transform -translate-y-2"
               } overflow-hidden`}
             >
-              <div className="px-3 pb-3">
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-3">
+              <div className="p-4 bg-gradient-to-b from-transparent to-black/20">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
                   <button
-                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    className={`group relative p-3 rounded-xl font-medium transition-all duration-300 hover:scale-105 ${
                       layersState.precipitation
-                        ? "bg-blue-500 text-white shadow-lg scale-105"
-                        : "bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600 hover:shadow-md"
-                    } border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
+                        ? "bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-2xl shadow-blue-500/30 scale-105"
+                        : "bg-white/90 backdrop-blur-sm text-gray-700 hover:bg-white hover:shadow-xl border border-white/20"
+                    }`}
                     onClick={togglePrecipitationLayer}
                   >
-                    <div className="flex flex-col items-center gap-1">
-                      <span className="text-lg">🌧️</span>
-                      <span className="text-xs lg:text-sm">Precipitación</span>
+                    <div className="flex flex-col items-center gap-2">
+                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+                        layersState.precipitation ? "bg-white/20" : "bg-blue-100"
+                      }`}>
+                        <span className="text-xl">🌧️</span>
+                      </div>
+                      <span className="text-xs font-semibold">Precipitación</span>
+                      {layersState.precipitation && (
+                        <div className="w-full h-0.5 bg-white/30 rounded-full overflow-hidden">
+                          <div className="h-full bg-white animate-shimmer bg-[length:200%_100%]"></div>
+                        </div>
+                      )}
                     </div>
                   </button>
                   <button
-                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    className={`group relative p-3 rounded-xl font-medium transition-all duration-300 hover:scale-105 ${
                       layersState.wind
-                        ? "bg-green-500 text-white shadow-lg scale-105"
-                        : "bg-white text-gray-700 hover:bg-green-50 hover:text-green-600 hover:shadow-md"
-                    } border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50`}
+                        ? "bg-gradient-to-br from-green-500 to-green-600 text-white shadow-2xl shadow-green-500/30 scale-105"
+                        : "bg-white/90 backdrop-blur-sm text-gray-700 hover:bg-white hover:shadow-xl border border-white/20"
+                    }`}
                     onClick={toggleWindLayer}
                   >
-                    <div className="flex flex-col items-center gap-1">
-                      <span className="text-lg">💨</span>
-                      <span className="text-xs lg:text-sm">Viento</span>
+                    <div className="flex flex-col items-center gap-2">
+                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+                        layersState.wind ? "bg-white/20" : "bg-green-100"
+                      }`}>
+                        <span className="text-xl">💨</span>
+                      </div>
+                      <span className="text-xs font-semibold">Viento</span>
+                      {layersState.wind && (
+                        <div className="w-full h-0.5 bg-white/30 rounded-full overflow-hidden">
+                          <div className="h-full bg-white animate-shimmer bg-[length:200%_100%]"></div>
+                        </div>
+                      )}
                     </div>
                   </button>
                   <button
-                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    className={`group relative p-3 rounded-xl font-medium transition-all duration-300 hover:scale-105 ${
                       layersState.temperature
-                        ? "bg-red-500 text-white shadow-lg scale-105"
-                        : "bg-white text-gray-700 hover:bg-red-50 hover:text-red-600 hover:shadow-md"
-                    } border border-gray-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50`}
+                        ? "bg-gradient-to-br from-red-500 to-red-600 text-white shadow-2xl shadow-red-500/30 scale-105"
+                        : "bg-white/90 backdrop-blur-sm text-gray-700 hover:bg-white hover:shadow-xl border border-white/20"
+                    }`}
                     onClick={toggleTemperatureLayer}
                   >
-                    <div className="flex flex-col items-center gap-1">
-                      <span className="text-lg">🌡️</span>
-                      <span className="text-xs lg:text-sm">Temperatura</span>
+                    <div className="flex flex-col items-center gap-2">
+                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+                        layersState.temperature ? "bg-white/20" : "bg-red-100"
+                      }`}>
+                        <span className="text-xl">🌡️</span>
+                      </div>
+                      <span className="text-xs font-semibold">Temperatura</span>
+                      {layersState.temperature && (
+                        <div className="w-full h-0.5 bg-white/30 rounded-full overflow-hidden">
+                          <div className="h-full bg-white animate-shimmer bg-[length:200%_100%]"></div>
+                        </div>
+                      )}
                     </div>
                   </button>
                   <button
-                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    className={`group relative p-3 rounded-xl font-medium transition-all duration-300 hover:scale-105 ${
                       layersState.radar
-                        ? "bg-purple-500 text-white shadow-lg scale-105"
-                        : "bg-white text-gray-700 hover:bg-purple-50 hover:text-purple-600 hover:shadow-md"
-                    } border border-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50`}
+                        ? "bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-2xl shadow-purple-500/30 scale-105"
+                        : "bg-white/90 backdrop-blur-sm text-gray-700 hover:bg-white hover:shadow-xl border border-white/20"
+                    }`}
                     onClick={toggleRadarLayer}
                   >
-                    <div className="flex flex-col items-center gap-1">
-                      <span className="text-lg">📡</span>
-                      <span className="text-xs lg:text-sm">Radar</span>
+                    <div className="flex flex-col items-center gap-2">
+                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+                        layersState.radar ? "bg-white/20" : "bg-purple-100"
+                      }`}>
+                        <span className="text-xl">📡</span>
+                      </div>
+                      <span className="text-xs font-semibold">Radar</span>
+                      {layersState.radar && (
+                        <div className="w-full h-0.5 bg-white/30 rounded-full overflow-hidden">
+                          <div className="h-full bg-white animate-shimmer bg-[length:200%_100%]"></div>
+                        </div>
+                      )}
                     </div>
                   </button>
+                </div>
+                <div className="mt-4 pt-3 border-t border-white/10">
+                  <div className="flex items-center justify-center gap-2 text-xs text-blue-200">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>Haz clic para activar/desactivar capas</span>
+                  </div>
                 </div>
               </div>
             </div>
