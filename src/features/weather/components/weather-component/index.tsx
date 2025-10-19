@@ -29,6 +29,7 @@ const WeatherComponent = ({ coords, resetMap }: WeatherMapProps) => {
     temperature: false,
     radar: false,
   });
+  const [isPanelExpanded, setIsPanelExpanded] = useState(false);
   const MAPTILER_KEY = import.meta.env.VITE_MAPTILER_KEY;
 
   useEffect(() => {
@@ -176,11 +177,34 @@ const WeatherComponent = ({ coords, resetMap }: WeatherMapProps) => {
       <SpaceBackground />
       <div ref={mapContainer} className="w-full h-full" />
       <div className="absolute top-4 left-0 right-0 p-3 z-10">
-        <div className="bg-black p-3 rounded-lg shadow-lg max-w-md mx-auto">
-          <h3 className="font-bold mb-2 text-center text-white">
-            Capas Climáticas
-          </h3>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-3">
+        <div className="bg-black rounded-lg shadow-lg max-w-md mx-auto overflow-hidden">
+          {/* Header del panel - siempre visible */}
+          <div className="p-3 flex items-center justify-between">
+            <h3 className="font-bold text-white text-sm">
+              Capas Climáticas
+            </h3>
+            <button
+              onClick={() => setIsPanelExpanded(!isPanelExpanded)}
+              className="text-white hover:text-blue-400 transition-colors duration-200 p-1 rounded hover:bg-gray-800"
+              aria-label={isPanelExpanded ? "Contraer panel" : "Expandir panel"}
+            >
+              <svg 
+                className={`w-5 h-5 transition-transform duration-300 ${isPanelExpanded ? 'rotate-180' : ''}`} 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+          </div>
+          
+          {/* Panel expandible de botones */}
+          <div className={`transition-all duration-300 ease-in-out ${
+            isPanelExpanded ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'
+          } overflow-hidden`}>
+            <div className="px-3 pb-3">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-3">
             <button
               className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                 layersState.precipitation
@@ -233,6 +257,8 @@ const WeatherComponent = ({ coords, resetMap }: WeatherMapProps) => {
                 <span className="text-xs lg:text-sm">Radar</span>
               </div>
             </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
