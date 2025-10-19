@@ -10,8 +10,7 @@
 
 *Una aplicación web premium que combina información meteorológica en tiempo real con navegación inteligente*
 
-[🌟 Demo Live](#) | [📖 Documentación](#funcionalidades) | [🚀 Instalación](#instalación)
-
+[🌟 Demo Live](https://whc-geosense-frontend.vercel.app/)
 </div>
 
 ---
