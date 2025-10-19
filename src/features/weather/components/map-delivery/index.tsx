@@ -54,10 +54,11 @@ const MapDelivery = ({ coords }: WeatherMapProps) => {
       zoom: 13,
       apiKey: MAPTILER_KEY,
       projection: "globe",
+      fullscreenControl: true,
     });
     mapRef.current = map;
     map.on("click", (event) => {
-      const coords = event.lngLat; 
+      const coords = event.lngLat;
       orchestrateMarks({ lng: coords.lng, lat: coords.lat });
     });
     return () => {
@@ -326,60 +327,60 @@ const MapDelivery = ({ coords }: WeatherMapProps) => {
         )}
       </div>
       <div className="relative w-full h-[calc(100vh-328px)] rounded-lg overflow-hidden shadow-lg">
-        <SpaceBackground />
-
-        <div ref={mapContainer} className="w-full h-full" />
-        {markersReady && (
-          <div className="absolute bg-white/50 top-4 left-0 right-0 p-3 z-10 flex justify-center">
-            {!calculateRouteReady && !initLoadingRoute && (
-              <>
+        <div ref={mapContainer} className="w-full h-full">
+          <SpaceBackground />
+          {markersReady && (
+            <div className="absolute bg-white/50 top-4 left-0 right-0 p-3 z-10 flex justify-center">
+              {!calculateRouteReady && !initLoadingRoute && (
+                <>
+                  <button
+                    className="bg-blue-500 text-white px-4 py-2 rounded"
+                    onClick={calculateRoute}
+                  >
+                    Calcular Ruta
+                  </button>
+                  <button
+                    className="bg-red-500 text-white px-4 py-2 rounded ml-2"
+                    onClick={() => {
+                      clearMarkers();
+                      setQueryA("");
+                      setQueryB("");
+                      mapRef.current?.flyTo({
+                        center: [coords[1], coords[0]],
+                        zoom: 13,
+                        speed: 1.5,
+                        pitch: 0,
+                        bearing: 0,
+                      });
+                    }}
+                  >
+                    Limpiar Mapa
+                  </button>
+                </>
+              )}
+              {calculateRouteReady && (
                 <button
-                  className="bg-blue-500 text-white px-4 py-2 rounded"
-                  onClick={calculateRoute}
+                  className="bg-green-500 text-white px-4 py-2 rounded ml-2"
+                  onClick={loadRouteFromGeoJson}
                 >
-                  Calcular Ruta
+                  Iniciar Ruta
                 </button>
-                <button
-                  className="bg-red-500 text-white px-4 py-2 rounded ml-2"
-                  onClick={() => {
-                    clearMarkers();
-                    setQueryA("");
-                    setQueryB("");
-                    mapRef.current?.flyTo({
-                      center: [coords[1], coords[0]],
-                      zoom: 13,
-                      speed: 1.5,
-                      pitch: 0,
-                      bearing: 0,
-                    });
-                  }}
-                >
-                  Limpiar Mapa
-                </button>
-              </>
-            )}
-            {calculateRouteReady && (
-              <button
-                className="bg-green-500 text-white px-4 py-2 rounded ml-2"
-                onClick={loadRouteFromGeoJson}
-              >
-                Iniciar Ruta
-              </button>
-            )}
-          </div>
-        )}
-        {initLoadingRoute && (
-          <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-            <p className="text-xl font-bold bg-white/70 p-4 rounded">
-              {textRouteStep}
-            </p>
-          </div>
-        )}
-        {showMessageSuccessRoute && (
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded shadow-lg">
-            Ruta completada con éxito.
-          </div>
-        )}
+              )}
+            </div>
+          )}
+          {initLoadingRoute && (
+            <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+              <p className="text-xl font-bold bg-white/70 p-4 rounded">
+                {textRouteStep}
+              </p>
+            </div>
+          )}
+          {showMessageSuccessRoute && (
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded shadow-lg">
+              Ruta completada con éxito.
+            </div>
+          )}
+        </div>
       </div>
     </>
   );
