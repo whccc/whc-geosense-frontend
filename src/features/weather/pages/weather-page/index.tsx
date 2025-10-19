@@ -28,11 +28,9 @@ const WeatherPage = () => {
   };
 
   return (
-    <div className="relative w-full h-screen p-[20px]">
+    <div className="relative w-full  p-[20px]">
       <div className="text-center">
-        <h1 className="text-2xl font-bold mb-4">
-          GeoSenseWhc: Mapa del Clima
-        </h1>
+        <h1 className="text-2xl font-bold mb-4">GeoSenseWhc: Mapa del Clima</h1>
         <input
           type="text"
           value={city}
