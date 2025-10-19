@@ -6,7 +6,7 @@ interface Star {
   radius: number;
   speed: number;
   alpha: number;
-  delta: number; // para parpadeo
+  delta: number; 
 }
 
 const SpaceBackground = () => {

@@ -5,9 +5,6 @@ const MapDeliveryPage = () => {
 
   return (
     <div className="relative w-full p-[20px]">
-      <div className="text-center">
-        <h1 className="text-2xl font-bold mb-4">GeoSenseWhc: Mapa de Rutas</h1>
-      </div>
       <div className="relative w-full ">
         <MapDelivery coords={coordinates} />
       </div>
