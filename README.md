@@ -10,7 +10,18 @@
 
 *Una aplicación web premium que combina información meteorológica en tiempo real con navegación inteligente*
 
-[🌟 Demo Live](https://whc-geosense-frontend.vercel.app/)
+[🌟 Demo Live](https://whc-geosense-frontend.vercel.app/) 
+
+## 🎥 Video Demostración
+
+<div align="center">
+  <a href="https://www.youtube.com/watch?v=XFgOvsbzYS8">
+    <img src="https://img.youtube.com/vi/XFgOvsbzYS8/maxresdefault.jpg" alt="GeoSenseWhc - Demo Completo" width="700" style="border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+  </a>
+  <p><strong>🎬 Haz clic para ver el demo completo del proyecto</strong></p>
+  <p><em>Descubre todas las funcionalidades premium de GeoSenseWhc en acción</em></p>
+</div>
+
 </div>
 
 ---
