@@ -180,30 +180,58 @@ const WeatherComponent = ({ coords, resetMap }: WeatherMapProps) => {
           <h3 className="font-bold mb-2 text-center text-white">
             Capas Climáticas
           </h3>
-          <div className="flex justify-center items-center">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-3">
             <button
-              className={`mb-2 px-3 py-1 rounded-lg text-left bg-white text-black mr-2 cursor-pointer`}
+              className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                layersState.precipitation
+                  ? 'bg-blue-500 text-white shadow-lg scale-105'
+                  : 'bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600 hover:shadow-md'
+              } border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50`}
               onClick={togglePrecipitationLayer}
             >
-              Precipitación
+              <div className="flex flex-col items-center gap-1">
+                <span className="text-lg">🌧️</span>
+                <span className="text-xs lg:text-sm">Precipitación</span>
+              </div>
             </button>
             <button
-              className={`mb-2 px-3 py-1 rounded-lg text-left bg-white text-black mr-2 cursor-pointer`}
+              className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                layersState.wind
+                  ? 'bg-green-500 text-white shadow-lg scale-105'
+                  : 'bg-white text-gray-700 hover:bg-green-50 hover:text-green-600 hover:shadow-md'
+              } border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50`}
               onClick={toggleWindLayer}
             >
-              Viento
+              <div className="flex flex-col items-center gap-1">
+                <span className="text-lg">💨</span>
+                <span className="text-xs lg:text-sm">Viento</span>
+              </div>
             </button>
             <button
-              className={`mb-2 px-3 py-1 rounded-lg text-left bg-white text-black mr-2 cursor-pointer`}
+              className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                layersState.temperature
+                  ? 'bg-red-500 text-white shadow-lg scale-105'
+                  : 'bg-white text-gray-700 hover:bg-red-50 hover:text-red-600 hover:shadow-md'
+              } border border-gray-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50`}
               onClick={toggleTemperatureLayer}
             >
-              Temperatura
+              <div className="flex flex-col items-center gap-1">
+                <span className="text-lg">🌡️</span>
+                <span className="text-xs lg:text-sm">Temperatura</span>
+              </div>
             </button>
             <button
-              className={`mb-2 px-3 py-1 rounded-lg text-left bg-white text-black mr-2 cursor-pointer`}
+              className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                layersState.radar
+                  ? 'bg-purple-500 text-white shadow-lg scale-105'
+                  : 'bg-white text-gray-700 hover:bg-purple-50 hover:text-purple-600 hover:shadow-md'
+              } border border-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50`}
               onClick={toggleRadarLayer}
             >
-              Radar
+              <div className="flex flex-col items-center gap-1">
+                <span className="text-lg">📡</span>
+                <span className="text-xs lg:text-sm">Radar</span>
+              </div>
             </button>
           </div>
         </div>

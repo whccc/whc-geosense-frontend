@@ -57,8 +57,7 @@ const MapDelivery = ({ coords }: WeatherMapProps) => {
     });
     mapRef.current = map;
     map.on("click", (event) => {
-      const coords = event.lngLat; // Contiene { lng, lat }
-      console.log("Coordenadas clic:", coords);
+      const coords = event.lngLat; 
       orchestrateMarks({ lng: coords.lng, lat: coords.lat });
     });
     return () => {
@@ -234,7 +233,6 @@ const MapDelivery = ({ coords }: WeatherMapProps) => {
         i++;
         setTimeout(moveMarker, 300);
       } else {
-        window.speechSynthesis.pause();
         setShowMessageSuccessRoute(true);
         setInitLoadingRoute(false);
         setTextRouteStep("Ruta completada.");
@@ -247,37 +245,81 @@ const MapDelivery = ({ coords }: WeatherMapProps) => {
 
   return (
     <>
-      <div
-        className="p-3 z-10 relative flex justify-between
-       items-center gap-2 bg-white rounded shadow-md w-[calc(100%-2rem)] mx-auto mb-4"
-      >
-        <label className="font-bold">Origen</label>
-        <input
-          type="text"
-          value={queryA}
-          onChange={handleChange}
-          placeholder="Escribe una dirección..."
-          className="border p-2 w-full rounded"
-        />
-        <label className="font-bold">Destino</label>
-        <input
-          type="text"
-          value={queryB}
-          onChange={handleChange}
-          placeholder="Escribe una dirección..."
-          className="border p-2 w-full rounded"
-        />
+      <div className="p-3 z-10 relative bg-white rounded-lg shadow-md w-[calc(100%-2rem)] mx-auto mb-4">
+        <div className="flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 lg:flex-1">
+            <label className="font-bold text-gray-700 text-sm sm:text-base whitespace-nowrap sm:min-w-[60px]">
+              Origen
+            </label>
+            <input
+              type="text"
+              value={queryA}
+              onChange={handleChange}
+              placeholder="Escribe una dirección de origen..."
+              className="border border-gray-300 p-2 w-full rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+            />
+          </div>
+          <div className="hidden lg:flex items-center justify-center">
+            <svg
+              className="w-5 h-5 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </div>
+
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 lg:flex-1">
+            <label className="font-bold text-gray-700 text-sm sm:text-base whitespace-nowrap sm:min-w-[60px]">
+              Destino
+            </label>
+            <input
+              type="text"
+              value={queryB}
+              onChange={handleChange}
+              placeholder="Escribe una dirección de destino..."
+              className="border border-gray-300 p-2 w-full rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+            />
+          </div>
+        </div>
         {suggestions.length > 0 && (
-          <ul className="absolute top-full left-0 right-0 bg-white border mt-1 max-h-60 overflow-auto z-10">
+          <ul className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-md mt-2 max-h-60 overflow-auto z-20 shadow-lg">
             {suggestions.map((s, i) => (
               <li
                 key={i}
-                className="p-2 hover:bg-blue-100 cursor-pointer"
+                className="p-3 hover:bg-blue-50 cursor-pointer text-sm sm:text-base border-b border-gray-100 last:border-b-0 transition-colors duration-150"
                 onClick={() => {
                   clearInputsAddress(s);
                 }}
               >
-                {s.name}
+                <div className="flex items-center gap-2">
+                  <svg
+                    className="w-4 h-4 text-gray-400 flex-shrink-0"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                  <span className="truncate">{s.name}</span>
+                </div>
               </li>
             ))}
           </ul>
