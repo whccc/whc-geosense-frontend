@@ -184,25 +184,6 @@ src/
 - **`SpaceBackground`** - Fondo animado con Canvas
 - **`Layout`** - Estructura base de la aplicación
 
----
-
-## 👨‍💻 Contribución
-
-¡Las contribuciones son bienvenidas! Por favor:
-
-1. 🍴 Fork el proyecto
-2. 🌿 Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. 📝 Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. 📤 Push a la rama (`git push origin feature/AmazingFeature`)
-5. 🔄 Abre un Pull Request
-
-### **📋 Guías de Contribución**
-- Sigue las convenciones de código existentes
-- Incluye tests para nuevas funcionalidades
-- Actualiza la documentación según sea necesario
-- Usa commits descriptivos y claros
-
----
 
 ## 📄 Licencia
 
@@ -215,7 +196,6 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más det
 **Wilson Herney Castro Cabrera**
 - 💼 LinkedIn: [Wilson Herney Castro Cabrera](https://www.linkedin.com/in/wilson-herney-castro-cabrera-73560a19a/)
 - 🐙 GitHub: [@whccc](https://github.com/whccc)
-- 📧 Email: [contacto@wilsoncastro.dev]
 
 ---
 
