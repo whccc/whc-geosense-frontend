@@ -24,6 +24,7 @@ const MapDelivery = ({ coords }: WeatherMapProps) => {
   const [textRouteStep, setTextRouteStep] = useState("");
   const [calculateRouteReady, setCalculateRouteReady] = useState(false);
   const { getRouteGeoJSON, getAddressCoordinatesAutocomplete } = useWeather();
+  const [showMessageSuccessRoute, setShowMessageSuccessRoute] = useState(false);
   const MAPTILER_KEY = import.meta.env.VITE_MAPTILER_KEY;
 
   const debouncedFetch = useRef(
@@ -169,6 +170,7 @@ const MapDelivery = ({ coords }: WeatherMapProps) => {
       mapRef.current.removeSource("route");
     }
     setMarkersReady(false);
+    setShowMessageSuccessRoute(false);
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -232,6 +234,8 @@ const MapDelivery = ({ coords }: WeatherMapProps) => {
         i++;
         setTimeout(moveMarker, 300);
       } else {
+        window.speechSynthesis.pause();
+        setShowMessageSuccessRoute(true);
         setInitLoadingRoute(false);
         setTextRouteStep("Ruta completada.");
         vehicleMarker.remove();
@@ -285,34 +289,33 @@ const MapDelivery = ({ coords }: WeatherMapProps) => {
         <div ref={mapContainer} className="w-full h-full" />
         {markersReady && (
           <div className="absolute bg-white/50 top-4 left-0 right-0 p-3 z-10 flex justify-center">
-            {!calculateRouteReady &&
-              (!initLoadingRoute && (
-                <>
-                  <button
-                    className="bg-blue-500 text-white px-4 py-2 rounded"
-                    onClick={calculateRoute}
-                  >
-                    Calcular Ruta
-                  </button>
-                  <button
-                    className="bg-red-500 text-white px-4 py-2 rounded ml-2"
-                    onClick={() => {
-                      clearMarkers();
-                      setQueryA("");
-                      setQueryB("");
-                      mapRef.current?.flyTo({
-                        center: [coords[1], coords[0]],
-                        zoom: 12,
-                        speed: 1.5,
-                        pitch: 0,
-                        bearing: 0,
-                      });
-                    }}
-                  >
-                    Limpiar Mapa
-                  </button>
-                </>
-              ))}
+            {!calculateRouteReady && !initLoadingRoute && (
+              <>
+                <button
+                  className="bg-blue-500 text-white px-4 py-2 rounded"
+                  onClick={calculateRoute}
+                >
+                  Calcular Ruta
+                </button>
+                <button
+                  className="bg-red-500 text-white px-4 py-2 rounded ml-2"
+                  onClick={() => {
+                    clearMarkers();
+                    setQueryA("");
+                    setQueryB("");
+                    mapRef.current?.flyTo({
+                      center: [coords[1], coords[0]],
+                      zoom: 13,
+                      speed: 1.5,
+                      pitch: 0,
+                      bearing: 0,
+                    });
+                  }}
+                >
+                  Limpiar Mapa
+                </button>
+              </>
+            )}
             {calculateRouteReady && (
               <button
                 className="bg-green-500 text-white px-4 py-2 rounded ml-2"
@@ -328,6 +331,11 @@ const MapDelivery = ({ coords }: WeatherMapProps) => {
             <p className="text-xl font-bold bg-white/70 p-4 rounded">
               {textRouteStep}
             </p>
+          </div>
+        )}
+        {showMessageSuccessRoute && (
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded shadow-lg">
+            Ruta completada con éxito.
           </div>
         )}
       </div>
