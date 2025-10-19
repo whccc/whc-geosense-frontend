@@ -701,7 +701,6 @@ const MapDelivery = ({ coords }: WeatherMapProps) => {
             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 animate-slideInUp">
               <div className="bg-gradient-to-r from-green-500 via-green-600 to-emerald-500 text-white px-6 py-4 rounded-2xl shadow-2xl border border-green-400/30 backdrop-blur-sm animate-bounce">
                 <div className="flex items-center gap-3">
-                  {/* Ícono de éxito animado */}
                   <div className="relative">
                     <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center animate-spin-slow">
                       <svg
@@ -718,7 +717,6 @@ const MapDelivery = ({ coords }: WeatherMapProps) => {
                         />
                       </svg>
                     </div>
-                    {/* Partículas de celebración */}
                     <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-300 rounded-full animate-ping"></div>
                     <div
                       className="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-yellow-400 rounded-full animate-ping"
@@ -726,7 +724,6 @@ const MapDelivery = ({ coords }: WeatherMapProps) => {
                     ></div>
                   </div>
 
-                  {/* Contenido del mensaje */}
                   <div className="flex flex-col">
                     <div className="flex items-center gap-2 mb-1">
                       <h3 className="font-bold text-lg">¡Ruta Completada!</h3>
@@ -737,7 +734,6 @@ const MapDelivery = ({ coords }: WeatherMapProps) => {
                     </p>
                   </div>
 
-                  {/* Efectos adicionales */}
                   <div className="flex flex-col gap-1 ml-2">
                     <div className="w-1 h-1 bg-yellow-300 rounded-full animate-pulse"></div>
                     <div
@@ -751,7 +747,6 @@ const MapDelivery = ({ coords }: WeatherMapProps) => {
                   </div>
                 </div>
 
-                {/* Barra de progreso completada */}
                 <div className="mt-3 h-1 bg-white/20 rounded-full overflow-hidden">
                   <div className="h-full bg-gradient-to-r from-white via-yellow-200 to-white rounded-full animate-shimmer bg-[length:200%_100%]"></div>
                 </div>
