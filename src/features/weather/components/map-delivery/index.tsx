@@ -7,9 +7,8 @@ import useWeather from "../../hooks/useWeather";
 
 interface WeatherMapProps {
   coords: Array<number>;
-  resetMap: boolean;
 }
-const MapDelivery = ({ coords, resetMap }: WeatherMapProps) => {
+const MapDelivery = ({ coords }: WeatherMapProps) => {
   const [queryA, setQueryA] = useState("");
   const [queryB, setQueryB] = useState("");
   const [suggestions, setSuggestions] = useState<
@@ -20,6 +19,10 @@ const MapDelivery = ({ coords, resetMap }: WeatherMapProps) => {
   const markerARef = useRef<Marker | null>(null);
   const markerBRef = useRef<Marker | null>(null);
   const [markersReady, setMarkersReady] = useState(false);
+  const dataRouteGeoJsonRef = useRef<any>([]);
+  const [initLoadingRoute, setInitLoadingRoute] = useState(false);
+  const [textRouteStep, setTextRouteStep] = useState("");
+  const [calculateRouteReady, setCalculateRouteReady] = useState(false);
   const { getRouteGeoJSON, getAddressCoordinatesAutocomplete } = useWeather();
   const MAPTILER_KEY = import.meta.env.VITE_MAPTILER_KEY;
 
@@ -32,17 +35,6 @@ const MapDelivery = ({ coords, resetMap }: WeatherMapProps) => {
       }
     }, 300)
   ).current;
-
-  useEffect(() => {
-    if (resetMap) {
-      if (!mapRef.current) return;
-      mapRef.current.flyTo({
-        center: [-60, -10],
-        zoom: 3,
-        speed: 1.5,
-      });
-    }
-  }, [resetMap]);
 
   useEffect(() => {
     if (!mapRef.current) return;
@@ -67,89 +59,7 @@ const MapDelivery = ({ coords, resetMap }: WeatherMapProps) => {
       const coords = event.lngLat; // Contiene { lng, lat }
       console.log("Coordenadas clic:", coords);
       orchestrateMarks({ lng: coords.lng, lat: coords.lat });
-    }); /*
-    map.on("load", () => {
-  
-      const depot = [-75.5743, 6.2442];
-      const stops = [
-        [-75.565, 6.25], // Cliente 1
-        [-75.558, 6.248], // Cliente 2
-      ];
-      // Marcador del depósito
-      /*  new Marker({ color: "green" })
-        .setLngLat(depot)
-        .setPopup("Depósito")
-        .addTo(map);
-
-      // Marcadores de clientes
-      stops.forEach((coord, idx) => {
-        new Marker({ color: "blue" })
-          .setLngLat(coord)
-          .setPopup(`Cliente ${idx + 1}`)
-          .addTo(map);
-      });
-      const url = `https://api.openrouteservice.org/v2/directions/driving-car?api_key=eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjNmZTA4NGY0YjRhZjQ0NGJhMTA3ZmQ5ZWY0NmM1OWRlIiwiaCI6Im11cm11cjY0In0=&start=-75.5743,6.2442&end=-75.558,6.248&language=es`;
-      fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
-          const routeGeoJSON = data.features[0].geometry;
-
-          // 1️⃣ Dibujar ruta en el mapa
-          map.addSource("route", { type: "geojson", data: routeGeoJSON });
-          map.addLayer({
-            id: "route",
-            type: "line",
-            source: "route",
-            layout: { "line-join": "round", "line-cap": "round" },
-            paint: { "line-color": "#007bff", "line-width": 4 },
-          });
-
-          // 2️⃣ Obtener instrucciones paso a paso
-          const steps = data.features[0].properties.segments[0].steps;
-
-          // 3️⃣ Animar vehículo (opcional)
-          const vehicleMarker = new Marker({ color: "red" })
-            .setLngLat([
-              data.features[0].geometry.coordinates[0][0],
-              data.features[0].geometry.coordinates[0][1],
-            ])
-            .addTo(map);
-
-          let i = 0;
-          function moveMarker() {
-            if (i < routeGeoJSON.coordinates.length) {
-              vehicleMarker.setLngLat(routeGeoJSON.coordinates[i]);
-              // 4️⃣ Detectar si estamos cerca de un giro
-              const nextStep = steps.find(
-                (step) => i >= step.way_points[0] && i <= step.way_points[1]
-              );
-              if (nextStep) {
-                console.log(`Instrucción actual: ${nextStep.instruction}`);
-                const message = `Paso ${i + 1}: ${
-                  nextStep.instruction
-                }, a ${nextStep.distance.toFixed(0)} metros`;
-
-                console.log(message);
-
-                // Crear objeto de síntesis de voz
-                const utterance = new SpeechSynthesisUtterance(message);
-
-                // Opcional: configurar idioma y velocidad
-                utterance.lang = "es-ES"; // Español
-                utterance.rate = 1; // Velocidad normal (0.5 a 2)
-                utterance.pitch = 1; // Tono normal (0 a 2)
-
-                // Reproducir voz
-                window.speechSynthesis.speak(utterance);
-              }
-              i++;
-              setTimeout(moveMarker, 500);
-            }
-          }
-
-          moveMarker();
-  })
-    });*/
+    });
     return () => {
       map.remove();
       window.speechSynthesis.cancel();
@@ -196,7 +106,7 @@ const MapDelivery = ({ coords, resetMap }: WeatherMapProps) => {
         markerBRef.current?.getLngLat().lat
       }`
     );
-    const routeGeoJSON = dataGeo;
+    const routeGeoJSON = dataGeo.features[0].geometry;
     mapRef.current.addSource("route", { type: "geojson", data: routeGeoJSON });
     mapRef.current.addLayer({
       id: "route",
@@ -205,14 +115,40 @@ const MapDelivery = ({ coords, resetMap }: WeatherMapProps) => {
       layout: { "line-join": "round", "line-cap": "round" },
       paint: { "line-color": "#007bff", "line-width": 4 },
     });
+
     mapRef.current.flyTo({
       center: [
         markerARef.current!.getLngLat().lng,
         markerARef.current!.getLngLat().lat,
       ],
-      zoom: 15,
+      zoom: 18,
       speed: 1.5,
+      bearing: getBearing(
+        markerARef.current!.getLngLat(),
+        markerBRef.current!.getLngLat()
+      ),
+      pitch: 60,
     });
+    dataRouteGeoJsonRef.current = dataGeo;
+    setCalculateRouteReady(true);
+  };
+
+  const getBearing = (
+    start: { lng: number; lat: number },
+    end: { lng: number; lat: number }
+  ) => {
+    const startLat = (start.lat * Math.PI) / 180;
+    const startLng = (start.lng * Math.PI) / 180;
+    const endLat = (end.lat * Math.PI) / 180;
+    const endLng = (end.lng * Math.PI) / 180;
+
+    const dLng = endLng - startLng;
+    const y = Math.sin(dLng) * Math.cos(endLat);
+    const x =
+      Math.cos(startLat) * Math.sin(endLat) -
+      Math.sin(startLat) * Math.cos(endLat) * Math.cos(dLng);
+    const bearing = Math.atan2(y, x);
+    return ((bearing * 180) / Math.PI + 360) % 360;
   };
 
   const clearMarkers = () => {
@@ -255,6 +191,56 @@ const MapDelivery = ({ coords, resetMap }: WeatherMapProps) => {
       addMarkerB(coords.coordinates);
     }
   };
+
+  const loadRouteFromGeoJson = () => {
+    if (!mapRef.current || !dataRouteGeoJsonRef.current) return;
+    setCalculateRouteReady(false);
+    setInitLoadingRoute(true);
+    const routeGeoJSON = dataRouteGeoJsonRef.current.features[0].geometry;
+    const stepsRef =
+      dataRouteGeoJsonRef.current.features[0].properties.segments[0].steps;
+
+    const vehicleMarker = new Marker({ color: "green" })
+      .setLngLat([
+        routeGeoJSON.coordinates[0][0],
+        routeGeoJSON.coordinates[0][1],
+      ])
+      .addTo(mapRef.current);
+    let i = 0;
+    function moveMarker() {
+      if (i < routeGeoJSON.coordinates.length) {
+        vehicleMarker.setLngLat(routeGeoJSON.coordinates[i]);
+        mapRef.current?.flyTo({
+          center: routeGeoJSON.coordinates[i],
+          zoom: 18,
+          speed: 1.5,
+        });
+        const nextStep = stepsRef.find(
+          (step: any) => i >= step.way_points[0] && i <= step.way_points[1]
+        );
+        if (nextStep) {
+          const message = `Paso ${i + 1}: ${
+            nextStep.instruction
+          }, a ${nextStep.distance.toFixed(0)} metros`;
+          setTextRouteStep(message);
+          const utterance = new SpeechSynthesisUtterance(message);
+          utterance.lang = "es-ES";
+          utterance.rate = 1;
+          utterance.pitch = 1;
+          window.speechSynthesis.speak(utterance);
+        }
+        i++;
+        setTimeout(moveMarker, 300);
+      } else {
+        setInitLoadingRoute(false);
+        setTextRouteStep("Ruta completada.");
+        vehicleMarker.remove();
+      }
+    }
+
+    moveMarker();
+  };
+
   return (
     <>
       <div
@@ -293,28 +279,55 @@ const MapDelivery = ({ coords, resetMap }: WeatherMapProps) => {
           </ul>
         )}
       </div>
-      <div className="relative w-full h-[calc(100vh-150px)] rounded-lg overflow-hidden shadow-lg">
+      <div className="relative w-full h-[calc(100vh-250px)] rounded-lg overflow-hidden shadow-lg">
         <SpaceBackground />
 
         <div ref={mapContainer} className="w-full h-full" />
         {markersReady && (
           <div className="absolute bg-white/50 top-4 left-0 right-0 p-3 z-10 flex justify-center">
-            <button
-              className="bg-blue-500 text-white px-4 py-2 rounded"
-              onClick={calculateRoute}
-            >
-              Calcular Ruta
-            </button>
-            <button
-              className="bg-red-500 text-white px-4 py-2 rounded ml-2"
-              onClick={() => {
-                clearMarkers();
-                setQueryA("");
-                setQueryB("");
-              }}
-            >
-              Limpiar Mapa
-            </button>
+            {!calculateRouteReady &&
+              (!initLoadingRoute && (
+                <>
+                  <button
+                    className="bg-blue-500 text-white px-4 py-2 rounded"
+                    onClick={calculateRoute}
+                  >
+                    Calcular Ruta
+                  </button>
+                  <button
+                    className="bg-red-500 text-white px-4 py-2 rounded ml-2"
+                    onClick={() => {
+                      clearMarkers();
+                      setQueryA("");
+                      setQueryB("");
+                      mapRef.current?.flyTo({
+                        center: [coords[1], coords[0]],
+                        zoom: 12,
+                        speed: 1.5,
+                        pitch: 0,
+                        bearing: 0,
+                      });
+                    }}
+                  >
+                    Limpiar Mapa
+                  </button>
+                </>
+              ))}
+            {calculateRouteReady && (
+              <button
+                className="bg-green-500 text-white px-4 py-2 rounded ml-2"
+                onClick={loadRouteFromGeoJson}
+              >
+                Iniciar Ruta
+              </button>
+            )}
+          </div>
+        )}
+        {initLoadingRoute && (
+          <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+            <p className="text-xl font-bold bg-white/70 p-4 rounded">
+              {textRouteStep}
+            </p>
           </div>
         )}
       </div>

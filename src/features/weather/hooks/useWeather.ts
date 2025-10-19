@@ -54,10 +54,10 @@ const useWeather = () => {
     const response = await api.get(
       `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${
         import.meta.env.VITE_KEY_ROUTER
-      }&start=${start}&end=${end}&language=es`
+      }&start=${start}&end=${end}&lang=es`
     );
     const data = response.data;
-    const routeGeoJSON = data.features[0].geometry;
+    const routeGeoJSON = data;
     return routeGeoJSON;
   };
   return {

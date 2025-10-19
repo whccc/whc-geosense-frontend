@@ -9,7 +9,7 @@ const MapDeliveryPage = () => {
         <h1 className="text-2xl font-bold mb-4">GeoSenseWhc: Mapa de Rutas</h1>
       </div>
       <div className="relative w-full h-screen">
-        <MapDelivery coords={coordinates} resetMap={false} />
+        <MapDelivery coords={coordinates} />
       </div>
     </div>
   );
