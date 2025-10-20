@@ -246,147 +246,159 @@ const MapDelivery = ({ coords }: WeatherMapProps) => {
 
   return (
     <>
-      <div className="relative z-10  mx-auto mb-6">
-        <div className="bg-gradient-to-br from-orange-50 via-white to-red-50 rounded-2xl shadow-xl border border-gray-200/50 p-6 backdrop-blur-sm">
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-              <span className="text-white text-lg">🌍</span>
+      <div className="relative z-10 mx-auto mb-8">
+        <div className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/30 p-8 relative overflow-hidden group hover:shadow-3xl transition-all duration-700">
+          <div className="absolute inset-0 bg-gradient-to-br from-orange-500/8 via-red-500/4 to-pink-500/8 rounded-3xl"></div>
+          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent group-hover:via-white/20 transition-all duration-500 rounded-3xl"></div>
+          
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 rounded-b-full opacity-60 group-hover:w-32 group-hover:opacity-100 transition-all duration-500"></div>
+          
+          <div className="flex items-center justify-center gap-4 mb-8 relative z-10">
+            <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl flex items-center justify-center shadow-xl group-hover:rotate-6 group-hover:scale-110 transition-all duration-500">
+              <span className="text-white text-xl">🗺️</span>
             </div>
-            <h1 className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
+            <h1 className="text-4xl lg:text-5xl font-black bg-gradient-to-r from-orange-600 via-red-600 to-pink-700 bg-clip-text text-transparent group-hover:from-orange-500 group-hover:via-red-500 group-hover:to-pink-600 transition-all duration-500">
               Mapa de Rutas
             </h1>
           </div>
 
-          <p className="text-gray-600 text-center mb-6 max-w-xl mx-auto">
-            Calcula la mejor ruta entre dos ubicaciones con navegación paso a
-            paso
+          <p className="text-gray-700 text-xl text-center mb-10 max-w-3xl mx-auto font-medium leading-relaxed relative z-10">
+            Calcula la mejor ruta entre dos ubicaciones con navegación paso a paso inteligente
           </p>
-          <div className="flex flex-col lg:flex-row lg:items-end gap-4 max-w-4xl mx-auto">
-            <div className="flex-1">
-              <div className="flex items-center gap-2 mb-2">
-                <div className="w-3 h-3 bg-red-500 rounded-full shadow-sm"></div>
-                <label className="font-semibold text-gray-800 text-sm">
+          <div className="flex flex-col lg:flex-row lg:items-end gap-6 max-w-5xl mx-auto relative z-10">
+            <div className="flex-1 group/input">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-4 h-4 bg-gradient-to-r from-red-500 to-red-600 rounded-full shadow-lg animate-pulse"></div>
+                <label className="font-bold text-gray-800 text-base">
                   Punto de Origen
                 </label>
               </div>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <svg
-                    className="w-5 h-5 text-red-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
+              <div className="relative group/field">
+                <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 via-orange-500/10 to-red-500/20 rounded-2xl blur opacity-0 group-focus-within/field:opacity-100 transition-all duration-500"></div>
+                
+                <div className="relative bg-white/95 backdrop-blur-sm rounded-2xl border border-white/50 shadow-xl group-focus-within/field:shadow-2xl group-focus-within/field:border-red-300/60 transition-all duration-300">
+                  <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+                    <svg
+                      className="w-6 h-6 text-red-400 group-focus-within/field:text-red-600 transition-colors duration-300"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                    </svg>
+                  </div>
+                  <input
+                    type="text"
+                    value={queryA}
+                    onChange={handleChange}
+                    placeholder="Ingresa tu ubicación de salida..."
+                    className="w-full pl-14 pr-6 py-4 text-lg border-0 rounded-2xl focus:ring-0 focus:outline-none bg-transparent text-gray-800 placeholder-gray-500 font-medium"
+                  />
                 </div>
-                <input
-                  type="text"
-                  value={queryA}
-                  onChange={handleChange}
-                  placeholder="Ingresa tu ubicación de salida..."
-                  className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all duration-200 bg-white/80 backdrop-blur-sm shadow-sm text-gray-700 placeholder-gray-400"
-                />
               </div>
             </div>
 
-            <div className="hidden lg:flex flex-col items-center justify-center px-3 pb-3">
-              <div className="flex items-center gap-1">
-                <div className="w-2 h-2 bg-gradient-to-r from-red-500 to-blue-500 rounded-full animate-pulse"></div>
-                <div className="w-8 h-0.5 bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500"></div>
+            <div className="hidden lg:flex flex-col items-center justify-center px-4 pb-4">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-3 h-3 bg-gradient-to-r from-red-500 to-orange-500 rounded-full animate-pulse shadow-lg"></div>
+                <div className="w-12 h-1 bg-gradient-to-r from-red-500 via-orange-500 via-yellow-500 to-blue-500 rounded-full"></div>
                 <div
-                  className="w-2 h-2 bg-gradient-to-r from-red-500 to-blue-500 rounded-full animate-pulse"
+                  className="w-3 h-3 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full animate-pulse shadow-lg"
                   style={{ animationDelay: "0.5s" }}
                 ></div>
               </div>
-              <svg
-                className="w-6 h-6 text-gray-400 mt-1"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M13 7l5 5m0 0l-5 5m5-5H6"
-                />
-              </svg>
+              <div className="bg-white/60 backdrop-blur-sm rounded-full p-2">
+                <svg
+                  className="w-6 h-6 text-gray-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  />
+                </svg>
+              </div>
             </div>
 
-            <div className="flex-1">
-              <div className="flex items-center gap-2 mb-2">
-                <div className="w-3 h-3 bg-blue-500 rounded-full shadow-sm"></div>
-                <label className="font-semibold text-gray-800 text-sm">
+            <div className="flex-1 group/input">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-4 h-4 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full shadow-lg animate-pulse"></div>
+                <label className="font-bold text-gray-800 text-base">
                   Punto de Destino
                 </label>
               </div>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <svg
-                    className="w-5 h-5 text-blue-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
+              <div className="relative group/field">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-indigo-500/10 to-blue-500/20 rounded-2xl blur opacity-0 group-focus-within/field:opacity-100 transition-all duration-500"></div>
+                
+                <div className="relative bg-white/95 backdrop-blur-sm rounded-2xl border border-white/50 shadow-xl group-focus-within/field:shadow-2xl group-focus-within/field:border-blue-300/60 transition-all duration-300">
+                  <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+                    <svg
+                      className="w-6 h-6 text-blue-400 group-focus-within/field:text-blue-600 transition-colors duration-300"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                    </svg>
+                  </div>
+                  <input
+                    type="text"
+                    value={queryB}
+                    onChange={handleChange}
+                    placeholder="Ingresa tu destino final..."
+                    className="w-full pl-14 pr-6 py-4 text-lg border-0 rounded-2xl focus:ring-0 focus:outline-none bg-transparent text-gray-800 placeholder-gray-500 font-medium"
+                  />
                 </div>
-                <input
-                  type="text"
-                  value={queryB}
-                  onChange={handleChange}
-                  placeholder="Ingresa tu destino final..."
-                  className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white/80 backdrop-blur-sm shadow-sm text-gray-700 placeholder-gray-400"
-                />
               </div>
             </div>
           </div>
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-sm text-gray-500">
-            <div className="flex items-center gap-1">
-              <span className="text-orange-500">💡</span>
-              <span>Haz clic en el mapa para marcar puntos</span>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-600 relative z-10">
+            <div className="flex items-center gap-2 bg-white/50 backdrop-blur-sm rounded-full px-4 py-2 border border-white/40">
+              <span className="text-orange-500 text-base">💡</span>
+              <span className="font-medium">Haz clic en el mapa para marcar puntos</span>
             </div>
-            <span className="hidden sm:inline">•</span>
-            <div className="flex items-center gap-1">
-              <span className="text-red-500">📍</span>
-              <span>Origen en rojo</span>
+            <div className="flex items-center gap-2 bg-white/50 backdrop-blur-sm rounded-full px-4 py-2 border border-white/40">
+              <span className="text-red-500 text-base">📍</span>
+              <span className="font-medium">Origen en rojo</span>
             </div>
-            <span className="hidden sm:inline">•</span>
-            <div className="flex items-center gap-1">
-              <span className="text-blue-500">📍</span>
-              <span>Destino en azul</span>
+            <div className="flex items-center gap-2 bg-white/50 backdrop-blur-sm rounded-full px-4 py-2 border border-white/40">
+              <span className="text-blue-500 text-base">📍</span>
+              <span className="font-medium">Destino en azul</span>
             </div>
           </div>
           {suggestions.length > 0 && (
-            <div className="mt-4">
-              <div className="bg-white/90 backdrop-blur-md border border-gray-200 rounded-2xl shadow-2xl overflow-hidden">
-                <div className="bg-gradient-to-r from-gray-50 to-gray-100 px-4 py-3 border-b border-gray-200">
-                  <h3 className="font-semibold text-gray-800 flex items-center gap-2">
+            <div className="mt-6">
+              <div className="bg-white/95 backdrop-blur-xl border border-white/40 rounded-3xl shadow-2xl overflow-hidden">
+                <div className="bg-gradient-to-r from-blue-50/80 to-indigo-50/80 px-6 py-4 border-b border-white/30">
+                  <h3 className="font-bold text-gray-800 flex items-center gap-3">
                     <svg
-                      className="w-4 h-4 text-gray-600"
+                      className="w-5 h-5 text-blue-600"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -463,25 +475,27 @@ const MapDelivery = ({ coords }: WeatherMapProps) => {
           )}
         </div>
       </div>
-      <div className="relative w-full h-[calc(100vh-328px)] rounded-lg overflow-hidden shadow-lg">
-        <div ref={mapContainer} className="w-full h-full">
+      <div className="relative w-full h-[calc(100vh)] rounded-2xl overflow-hidden shadow-2xl border border-white/30">
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/10 via-blue-900/5 to-purple-900/10 backdrop-blur-sm z-0"></div>
+        
+        <div ref={mapContainer} className="w-full h-full relative">
           <SpaceBackground />
           {markersReady && (
-            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-20 animate-slideInUp">
-              <div className="bg-white/10 backdrop-blur-xl border border-white/30 rounded-2xl p-4 shadow-2xl">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-green-500/10 rounded-2xl"></div>
+            <div className="absolute top-6 left-1/2 transform -translate-x-1/2 z-20 animate-slideInUp">
+              <div className="bg-white/90 backdrop-blur-xl border border-white/40 rounded-3xl p-6 shadow-2xl hover:shadow-3xl transition-all duration-500 group">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/8 via-purple-500/5 to-emerald-500/8 rounded-3xl group-hover:from-blue-500/12 group-hover:via-purple-500/8 group-hover:to-emerald-500/12 transition-all duration-500"></div>
 
                 {!calculateRouteReady && !initLoadingRoute && (
-                  <div className="relative flex flex-col sm:flex-row gap-3">
+                  <div className="relative flex flex-col sm:flex-row gap-4">
                     <button
-                      className="group relative overflow-hidden flex items-center gap-3 bg-gradient-to-r from-blue-500/90 via-blue-600/90 to-indigo-600/90 hover:from-blue-600 hover:via-blue-700 hover:to-indigo-700 text-white px-6 py-3 rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 backdrop-blur-sm border border-blue-400/30"
+                      className="group/btn relative overflow-hidden flex items-center gap-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-8 py-4 rounded-2xl font-bold shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-500/30"
                       onClick={calculateRoute}
                     >
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700"></div>
 
-                      <div className="relative w-5 h-5 group-hover:rotate-12 transition-transform duration-300">
+                      <div className="relative w-6 h-6 group-hover/btn:rotate-12 transition-transform duration-300">
                         <svg
-                          className="w-5 h-5"
+                          className="w-6 h-6"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -514,7 +528,7 @@ const MapDelivery = ({ coords }: WeatherMapProps) => {
                     </button>
 
                     <button
-                      className="group relative overflow-hidden flex items-center gap-3 bg-gradient-to-r from-red-500/90 via-red-600/90 to-pink-600/90 hover:from-red-600 hover:via-red-700 hover:to-pink-700 text-white px-6 py-3 rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50 backdrop-blur-sm border border-red-400/30"
+                      className="group/btn relative overflow-hidden flex items-center gap-3 bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white px-8 py-4 rounded-2xl font-bold shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-red-500/30"
                       onClick={() => {
                         clearMarkers();
                         setQueryA("");
@@ -528,11 +542,11 @@ const MapDelivery = ({ coords }: WeatherMapProps) => {
                         });
                       }}
                     >
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700"></div>
 
-                      <div className="relative w-5 h-5 group-hover:animate-bounce">
+                      <div className="relative w-6 h-6 group-hover/btn:animate-bounce">
                         <svg
-                          className="w-5 h-5"
+                          className="w-6 h-6"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -554,15 +568,15 @@ const MapDelivery = ({ coords }: WeatherMapProps) => {
                 {calculateRouteReady && (
                   <div className="relative">
                     <button
-                      className="group relative overflow-hidden flex items-center gap-4 bg-gradient-to-r from-emerald-500/95 via-green-500/95 to-teal-500/95 hover:from-emerald-600 hover:via-green-600 hover:to-teal-600 text-white px-8 py-4 rounded-xl font-bold shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-opacity-50 backdrop-blur-sm border border-emerald-400/40 animate-pulse hover:animate-none"
+                      className="group/mega relative overflow-hidden flex items-center gap-4 bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white px-10 py-5 rounded-2xl font-black shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-110 focus:outline-none focus:ring-4 focus:ring-emerald-500/40 animate-pulse hover:animate-none border-2 border-emerald-300/50"
                       onClick={loadRouteFromGeoJson}
                     >
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                      <div className="absolute inset-0 bg-gradient-to-l from-transparent via-emerald-300/20 to-transparent translate-x-full group-hover:-translate-x-full transition-transform duration-1000 delay-200"></div>
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover/mega:translate-x-full transition-transform duration-1000"></div>
+                      <div className="absolute inset-0 bg-gradient-to-l from-transparent via-emerald-300/30 to-transparent translate-x-full group-hover/mega:-translate-x-full transition-transform duration-1000 delay-200"></div>
 
-                      <div className="relative w-6 h-6 group-hover:rotate-12 transition-all duration-300">
+                      <div className="relative w-7 h-7 group-hover/mega:rotate-12 transition-all duration-300">
                         <svg
-                          className="w-6 h-6 group-hover:scale-110 transition-transform duration-300"
+                          className="w-7 h-7 group-hover/mega:scale-110 transition-transform duration-300"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -578,7 +592,7 @@ const MapDelivery = ({ coords }: WeatherMapProps) => {
                         <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-orange-400 rounded-full animate-bounce opacity-80"></div>
                       </div>
 
-                      <span className="relative text-lg font-black bg-gradient-to-r from-white via-yellow-100 to-white bg-clip-text text-transparent group-hover:from-yellow-100 group-hover:via-white group-hover:to-yellow-100 transition-all duration-300">
+                      <span className="relative text-xl font-black bg-gradient-to-r from-white via-yellow-100 to-white bg-clip-text text-transparent group-hover/mega:from-yellow-100 group-hover/mega:via-white group-hover/mega:to-yellow-100 transition-all duration-300">
                         🚀 INICIAR RUTA
                       </span>
 
@@ -614,13 +628,15 @@ const MapDelivery = ({ coords }: WeatherMapProps) => {
             </div>
           )}
           {initLoadingRoute && (
-            <div className="absolute inset-0 bg-black/60 flex items-center justify-center animate-fadeIn">
-              <div className="bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-white/20 max-w-md mx-4 transform animate-slideInUp">
-                <div className="flex items-center gap-3 mb-4">
+            <div className="absolute inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center animate-fadeIn">
+              <div className="bg-white/98 backdrop-blur-xl p-8 rounded-3xl shadow-3xl border border-white/50 max-w-lg mx-6 transform animate-slideInUp relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/8 via-green-500/5 to-emerald-500/8 rounded-3xl"></div>
+                
+                <div className="flex items-center gap-4 mb-6 relative z-10">
                   <div className="relative">
-                    <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center animate-pulse">
+                    <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-2xl flex items-center justify-center animate-pulse shadow-xl">
                       <svg
-                        className="w-4 h-4 text-white animate-bounce"
+                        className="w-6 h-6 text-white animate-bounce"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -639,57 +655,59 @@ const MapDelivery = ({ coords }: WeatherMapProps) => {
                         />
                       </svg>
                     </div>
-
-                    <div className="absolute inset-0 border-2 border-blue-400 rounded-full animate-ping opacity-30"></div>
+                    <div className="absolute inset-0 border-3 border-blue-400/50 rounded-2xl animate-ping opacity-40"></div>
+                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+                    <h3 className="text-2xl font-black text-gray-800 flex items-center gap-3">
                       🚗 Navegando Ruta
                     </h3>
-                    <p className="text-sm text-gray-600">
-                      Siguiendo las instrucciones...
+                    <p className="text-lg text-gray-600 font-medium">
+                      Siguiendo las instrucciones de navegación...
                     </p>
                   </div>
                 </div>
 
-                <div className="mb-4">
-                  <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-blue-500 via-green-500 to-blue-500 rounded-full animate-pulse bg-[length:200%_100%] animate-shimmer"></div>
+                <div className="mb-6 relative z-10">
+                  <div className="h-3 bg-gray-200 rounded-full overflow-hidden shadow-inner">
+                    <div className="h-full bg-gradient-to-r from-blue-500 via-emerald-500 to-blue-500 rounded-full animate-pulse bg-[length:200%_100%] animate-shimmer shadow-lg"></div>
                   </div>
                 </div>
 
-                <div className="bg-gradient-to-r from-blue-50 to-green-50 p-4 rounded-xl border border-blue-200/50">
-                  <p className="text-gray-800 font-medium leading-relaxed text-center">
-                    <strong>{textRouteStep}</strong>
+                <div className="bg-gradient-to-r from-blue-50/80 to-emerald-50/80 backdrop-blur-sm p-6 rounded-2xl border border-blue-200/60 shadow-lg relative z-10">
+                  <p className="text-gray-800 font-bold text-lg leading-relaxed text-center">
+                    {textRouteStep}
                   </p>
                 </div>
 
-                <div className="mt-4 flex items-center justify-center gap-2 text-sm text-gray-600">
-                  <svg
-                    className="w-4 h-4 animate-pulse"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
-                    />
-                  </svg>
-                  <span>Audio activo</span>
-                  <div className="flex gap-1">
+                <div className="mt-6 flex items-center justify-center gap-3 text-base text-gray-700 relative z-10">
+                  <div className="bg-white/60 backdrop-blur-sm rounded-full p-2">
+                    <svg
+                      className="w-5 h-5 animate-pulse text-emerald-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+                      />
+                    </svg>
+                  </div>
+                  <span className="font-medium">Audio activo</span>
+                  <div className="flex gap-1.5">
                     <div
-                      className="w-1 h-3 bg-green-400 rounded animate-bounce"
+                      className="w-1.5 h-4 bg-emerald-400 rounded-full animate-bounce shadow-sm"
                       style={{ animationDelay: "0ms" }}
                     ></div>
                     <div
-                      className="w-1 h-3 bg-green-400 rounded animate-bounce"
+                      className="w-1.5 h-4 bg-emerald-400 rounded-full animate-bounce shadow-sm"
                       style={{ animationDelay: "150ms" }}
                     ></div>
                     <div
-                      className="w-1 h-3 bg-green-400 rounded animate-bounce"
+                      className="w-1.5 h-4 bg-emerald-400 rounded-full animate-bounce shadow-sm"
                       style={{ animationDelay: "300ms" }}
                     ></div>
                   </div>
@@ -698,13 +716,15 @@ const MapDelivery = ({ coords }: WeatherMapProps) => {
             </div>
           )}
           {showMessageSuccessRoute && (
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 animate-slideInUp">
-              <div className="bg-gradient-to-r from-green-500 via-green-600 to-emerald-500 text-white px-6 py-4 rounded-2xl shadow-2xl border border-green-400/30 backdrop-blur-sm animate-bounce">
-                <div className="flex items-center gap-3">
+            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 animate-slideInUp">
+              <div className="bg-gradient-to-r from-emerald-500 via-green-500 to-emerald-600 text-white px-8 py-6 rounded-3xl shadow-3xl border-2 border-emerald-300/50 backdrop-blur-xl animate-bounce relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/20 via-green-400/10 to-emerald-400/20 rounded-3xl"></div>
+                
+                <div className="flex items-center gap-4 relative z-10">
                   <div className="relative">
-                    <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center animate-spin-slow">
+                    <div className="w-12 h-12 bg-white/25 backdrop-blur-sm rounded-2xl flex items-center justify-center animate-spin-slow shadow-xl">
                       <svg
-                        className="w-5 h-5 text-white"
+                        className="w-7 h-7 text-white"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -717,39 +737,43 @@ const MapDelivery = ({ coords }: WeatherMapProps) => {
                         />
                       </svg>
                     </div>
-                    <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-300 rounded-full animate-ping"></div>
+                    <div className="absolute -top-2 -right-2 w-3 h-3 bg-yellow-300 rounded-full animate-ping"></div>
                     <div
-                      className="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-yellow-400 rounded-full animate-ping"
+                      className="absolute -bottom-2 -left-2 w-2.5 h-2.5 bg-yellow-400 rounded-full animate-ping"
                       style={{ animationDelay: "0.5s" }}
                     ></div>
+                    <div className="absolute inset-0 border-2 border-white/30 rounded-2xl animate-pulse"></div>
                   </div>
 
                   <div className="flex flex-col">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-bold text-lg">¡Ruta Completada!</h3>
-                      <span className="text-xl animate-bounce">🎉</span>
+                    <div className="flex items-center gap-3 mb-2">
+                      <h3 className="font-black text-2xl">¡Ruta Completada!</h3>
+                      <span className="text-2xl animate-bounce">🎉</span>
+                      <span className="text-xl animate-pulse" style={{ animationDelay: "0.3s" }}>✨</span>
                     </div>
-                    <p className="text-green-100 text-sm font-medium">
+                    <p className="text-emerald-100 text-lg font-semibold">
                       Has llegado exitosamente a tu destino
                     </p>
                   </div>
 
-                  <div className="flex flex-col gap-1 ml-2">
-                    <div className="w-1 h-1 bg-yellow-300 rounded-full animate-pulse"></div>
+                  <div className="flex flex-col gap-2 ml-3">
+                    <div className="w-2 h-2 bg-yellow-300 rounded-full animate-pulse shadow-lg"></div>
                     <div
-                      className="w-1 h-1 bg-yellow-400 rounded-full animate-pulse"
+                      className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse shadow-lg"
                       style={{ animationDelay: "0.3s" }}
                     ></div>
                     <div
-                      className="w-1 h-1 bg-yellow-500 rounded-full animate-pulse"
+                      className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse shadow-lg"
                       style={{ animationDelay: "0.6s" }}
                     ></div>
                   </div>
                 </div>
 
-                <div className="mt-3 h-1 bg-white/20 rounded-full overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-white via-yellow-200 to-white rounded-full animate-shimmer bg-[length:200%_100%]"></div>
+                <div className="mt-4 h-2 bg-white/30 rounded-full overflow-hidden relative z-10">
+                  <div className="h-full bg-gradient-to-r from-white via-yellow-200 to-white rounded-full animate-shimmer bg-[length:200%_100%] shadow-inner"></div>
                 </div>
+                
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 bg-yellow-400 rounded-full animate-bounce opacity-80"></div>
               </div>
             </div>
           )}
