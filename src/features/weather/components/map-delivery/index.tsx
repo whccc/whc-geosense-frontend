@@ -628,7 +628,7 @@ const MapDelivery = ({ coords }: WeatherMapProps) => {
             </div>
           )}
           {initLoadingRoute && (
-            <div className="absolute inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center animate-fadeIn">
+            <div className="absolute inset-0 bg-black/70 flex items-center justify-center animate-fadeIn">
               <div className="bg-white/98 backdrop-blur-xl p-8 rounded-3xl shadow-3xl border border-white/50 max-w-lg mx-6 transform animate-slideInUp relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500/8 via-green-500/5 to-emerald-500/8 rounded-3xl"></div>
                 
